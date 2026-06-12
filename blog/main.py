@@ -1,5 +1,5 @@
-from schema.respone import blog_respone
-from schema.request import add_blog_request, update_blog_request
+from blog.schema.respone import blog_respone
+from blog.schema.request import add_blog_request, update_blog_request
 from fastapi import FastAPI, status, HTTPException
 
 app = FastAPI()
