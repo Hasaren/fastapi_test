@@ -7,3 +7,7 @@
 # ===============================================================
 
 from sqlalchemy.orm import DeclarativeBase
+
+# Base 클래스 : 이 클래스를 상속 받는 모든 클래스는 데이터 베이스테이블로 취급한다는 기준점 역할
+class Base(DeclarativeBase):
+    pass
