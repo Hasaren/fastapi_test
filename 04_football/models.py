@@ -105,7 +105,7 @@ class Performance(Base):
 
     performance_id: Mapped[int] = mapped_column(primary_key=True, index=True)
     week_number: Mapped[str] = mapped_column(String)
-    fantasy_point: Mapped[float] = mapped_column(Float)
+    fantasy_points: Mapped[float] = mapped_column(Float)
     last_changed_date: Mapped[date] = mapped_column(Date)
 
     # 외래키(ForeignKey) - DB 수준의 연결 --> 테이블명.컬럼명
