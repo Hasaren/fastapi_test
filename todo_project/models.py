@@ -66,7 +66,7 @@ class User(Base):
         String(255),
         nullable=False, # 로그인 패스워드는 반드시 필요
     )
-    create_at:Mapped[datetime] = mapped_column(
+    created_at:Mapped[datetime] = mapped_column(
         DateTime,
         server_default=func.now(), # 오늘 날짜 추출
         nullable=False,

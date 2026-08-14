@@ -4,6 +4,7 @@ HTTP 요청/응답 담당
 
 """
 
+# BackgroundTasks : 응답을 먼저 클라이언트에게 보내고, 그 이후에도 처리해도 되는 작업을 뒤에서 실행하게 한다.
 from fastapi import APIRouter, status, Depends, BackgroundTasks
 
 from schema.request import UserSignUpRequest, UserLoginRequest, RefreshTokenRequest
@@ -20,6 +21,11 @@ def get_user_service(session=Depends(get_session)) -> UserService:
 
 
 def send_welcome_email(email: str):
+    """
+    회원가입 성공 후 백그라운드로 실행되는 함수
+    실제 메일 발송 대신 5초 걸리는 작업으로 대신함 <- BackgroundTasks로 등록하면
+    클라이언트는 이 5초를 안 기다리고 바로 응답을 받는다.
+    """
     import time
     time.sleep(5)
     print(f"Send welcome email to {email}...")
@@ -31,7 +37,8 @@ def signup_user_handler(
     background_tasks: BackgroundTasks,
     service: UserService = Depends(get_user_service),
 ):
-    user = service.signup(body)
+    user = service.signup(body) # 이메일 중복 체크, 비밀번호 해싱 등 처리
+    # 라우터는 그 결과(user)를 받아서 백그라운드 테스크만 등록하고 반환
     background_tasks.add_task(send_welcome_email, user.email)
     return user
 
@@ -41,7 +48,7 @@ def login_user_handler(
     body: UserLoginRequest,
     service: UserService = Depends(get_user_service),
 ):
-    return service.login(body)
+    return service.login(body) # 이메일/비밀번호 검증부터 토큰 발급, refresh_token, DB 저장까지 처리 후 리턴
 
 
 @router.post("/users/refresh", status_code=status.HTTP_200_OK)
