@@ -42,6 +42,19 @@ if st.button('등록'):
 
 # -----------------------------------------------------------------------------------
 
+st.subheader('1단계: ISBN으로 바로 조회해보기')
+st.write('사진 없이 ISBN 숫자만 넣어서, 저자정보 API가 잘 연결됐는지 먼저 확인합니다.')
+
+isbn = st.text_input('ISBN 입력 (예: 9791139721973)',value='9791139721973')
+
+if st.button('조회하기'):
+    for book in requests.get(f'{API}/books').json():
+        if book["isbn"] == isbn:
+            st.success(f'{book["title"]}')
+            st.write(f'{book["title"]} ({book["author"]}) ({book["publisher"]})')  # --> 책 제목 (상태)
+            break
+
+# -----------------------------------------------------------------------------------
 st.subheader('등록된 책')
 
 # requests.get(...) -> FastAPI의 GET /books를 호출해서 등록된 전체 목록(JSON)을 받아온다.
