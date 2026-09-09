@@ -9,10 +9,12 @@
     {% for item in shelf_items %}
     <div class="col">
         <div class="card book-card h-100">
+            <!-- 책 표지가 있다면 -->
             {% if item.cover_url %}
             <img src="{{ item.cover_url }}" class="card-img-top"
                  alt="{{ item.book.title }}"
                  style="height: 220px; object-fit: cover;">
+            <!-- 책 표지가 없다면 -->
             {% else %}
             <div class="card-img-top book-cover-placeholder d-flex align-items-center justify-content-center"
                  style="height: 220px;">

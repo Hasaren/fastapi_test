@@ -1,4 +1,4 @@
-# 우리집 책장 v4 - Dockerfile
+# KOBIS API 기반 영화 정보 및 즐겨찾기 서비스 - Dockerfile
 # db --> PostgreSQL 17
 # api --> Fastapi
 # web --> Steamlit
@@ -14,16 +14,23 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # 소스 코드 복사
 COPY main.py .
-COPY database.py .
 COPY models.py .
 COPY streamlit_app.py .
+
+# database/ 폴더 추가
+COPY database/ ./database/
+
+# repositories/ 폴더 추가
+COPY repositories/ ./repositories/
+
+# routers/ 폴더 추가
+COPY routers/ ./routers/
+
+# schema/ 폴더 추가
+COPY schema/ ./schema/
+
+# services/ 폴더 추가
 COPY services/ ./services/
-
-# templates/ 폴더 추가
-COPY templates/ ./templates/
-
-# static/ 폴더 추가
-COPY static/ ./static/
 
 # EXPOSE : 이 컨테이너가 몇 번 포트를 쓰는지 문서화하는 명령어(실제로 포트를 열어주는 건 아니다.)
 # --> 실제 포트 연결은 docker-compose.yml이 담당

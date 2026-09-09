@@ -142,7 +142,8 @@ def ui_register_form(request: Request):
 
 @app.post('/ui/books/register')
 def ui_register_submit(request: Request, isbn: str=Form(...), image: UploadFile=File(...), db: Session=Depends(get_db)):
-    result = register_book_service(isbn, image, image.filename, db)
+    raw_image = image.file.read()
+    result = register_book_service(isbn, raw_image, image.filename, db)
     return templates.TemplateResponse(
         request=request,
         name='register.html',
