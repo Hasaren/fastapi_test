@@ -16,5 +16,5 @@ load_dotenv()
 llm = ChatGoogleGenerativeAI(model='gemini-3.6-flash',api_key=os.getenv("GOOGLE_API_KEY"))
 
 
-response = llm.invoke('우울해 위로해줘')
+response = llm.invoke('안녕')
 print(response)
